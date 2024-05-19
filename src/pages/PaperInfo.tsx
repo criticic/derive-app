@@ -73,7 +73,6 @@ const PaperInfo = () => {
                         <div className="mb-10"/>
                         <div className="flex justify-between mb-2 items-center absolute bottom-0">
                             <div className="text-gray-500">{paper.citationCount} citations</div>
-                            <div className="text-gray-500">{paper.citationCount} citations</div>
                         </div>
                     </div>
                 )}
