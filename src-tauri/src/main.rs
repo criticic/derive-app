@@ -12,6 +12,7 @@ fn main() {
         .plugin(tauri_plugin_os::init())
         .plugin(tauri_plugin_shell::init())
         // .invoke_handler(tauri::generate_handler![greet])
+        .plugin(tauri_plugin_store::Builder::default().build())
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

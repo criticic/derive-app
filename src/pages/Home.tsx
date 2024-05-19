@@ -1,4 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { Store } from '@tauri-apps/plugin-store';
+
 
 type Paper = {
     title: string;
@@ -9,9 +11,22 @@ type Paper = {
     authors: string;
 };
 
+const store = new Store('store.bin');
+
 const Home = () => {
     const [searchQuery, setSearchQuery] = useState('');
     const [papers, setPapers] = useState([] as Paper[]);
+
+    useEffect(() => {
+        const loadPapers = async () => {
+            const storedPapers = await store.get('papers');
+            if (storedPapers) {
+                setPapers(storedPapers as Paper[]);
+            }
+        };
+
+        loadPapers();
+    }, []);
 
     const handleSearch = async () => {
         if (searchQuery.trim()) {
@@ -29,6 +44,8 @@ const Home = () => {
                 };
                 // update the state with the fetched data
                 setPapers([...papers, output]);
+
+                await store.set('papers', [...papers, output]);
             } catch (error) {
                 console.error('Error fetching data from Semantic Scholar:', error);
             }
@@ -89,6 +106,13 @@ const Home = () => {
                             <div className="flex items-center mb-2 text-sm">
                                 <div className="text-gray-500 bg-white px-1 rounded-lg">{item.year}</div>
                                 <div className="text-gray-500 ml-2">{item.field}</div>
+                                <button
+                                    onClick={() => {
+                                        const newPapers = papers.filter((_, i) => i !== index);
+                                        setPapers(newPapers);
+                                        store.set('papers', newPapers);
+                                    }}
+                                    className="ml-auto text-red-500"> delete </button>
                             </div>
                             <div className="text-lg font-semibold mb-2">{item.title}</div>
                             <div className="text-gray-700 mb-2">{item.authors}</div>
