@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
 import { Store } from '@tauri-apps/plugin-store';
+import { Link } from 'react-router-dom';
 
 
-type Paper = {
+export type Paper = {
+    id: string;
     title: string;
     year: number;
     citationCount: number;
@@ -34,11 +36,12 @@ const Home = () => {
                 const response = await fetch(`https://api.semanticscholar.org/graph/v1/paper/${searchQuery}?fields=title,citationCount,tldr,year,fieldsOfStudy,authors`);
                 const data = await response.json();
                 console.log('Data from Semantic Scholar:', data);
-                var output = {
+                var output: Paper = {
+                    id: data.paperId,
                     title: data.title,
                     year: data.year,
                     citationCount: data.citationCount,
-                    abstract: data.tldr.text.substring(0, 200) + '...',
+                    abstract: data.tldr.text,
                     field: data.fieldsOfStudy[0],
                     authors: data.authors[0].name + " et al."
                 };
@@ -114,7 +117,7 @@ const Home = () => {
                                     }}
                                     className="ml-auto text-red-500"> delete </button>
                             </div>
-                            <div className="text-lg font-semibold mb-2">{item.title}</div>
+                            <Link to={`/paper/${item.id}`} className="text-lg font-semibold mb-2 hover:underline hover:italic">{item.title}</Link>
                             <div className="text-gray-700 mb-2">{item.authors}</div>
                             <div className="text-gray-600 mb-10">{item.abstract}</div>
                             <div className="flex justify-between mb-2 items-center absolute bottom-0">

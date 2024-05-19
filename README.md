@@ -3,6 +3,7 @@
 derive is app that helps you manage research papers, articles, and other documents. It is built with [Tauri](https://tauri.studio/), [React](https://react.dev/), and [Tailwind CSS](https://tailwindcss.com/).
 
 ![derive app screenshot](public/docs/screenshot.png)
+![paper info page](public/docs/paperinfo.png)
 
 ## Installation
 
