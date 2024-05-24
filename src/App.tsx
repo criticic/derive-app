@@ -4,6 +4,7 @@ import Home from "./pages/Home";
 import { Routes, Route, useLocation } from 'react-router-dom';
 import PaperInfo from "./pages/PaperInfo";
 import { NavRoute } from "./components/NavRoute";
+import Search from "./pages/Search";
 
 function App() {
   const location = useLocation();
@@ -15,6 +16,7 @@ function App() {
       <Routes location={location} key={location.pathname}>
         <Route path="/" element={<Home />} />
         <Route path="/paper/:id" element={<PaperInfo />} />
+        <Route path="/search" element={<Search />} />
       </Routes>
     </div>
   );

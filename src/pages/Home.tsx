@@ -8,7 +8,7 @@ export type Paper = {
     title: string;
     year: number;
     citationCount: number;
-    abstract: string;
+    abstract: string | null;
     field: string;
     authors: string;
 };
@@ -59,7 +59,7 @@ const Home = () => {
         <div className="parent bg-stone-50 flex flex-row overflow-hidden">
             <div className="sidebar flex-none pl-6 h-full">
                 <div className="">
-                    <h2 className="text-sm mb-2">Up next</h2>
+                    <Link to="/search" className="text-sm mb-2">Search</Link>
                     <h2 className="text-sm mb-2">Bookmarked</h2>
                     <h2 className="text-sm mb-6">Trending</h2>
                     <h2 className="text-sm mb-2">My library</h2>
